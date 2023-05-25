@@ -42,4 +42,6 @@ public class FcstItem {
     // Y좌표
     @JsonProperty("ny")
     private int ny;
+
+    private String categoryName;
 }
