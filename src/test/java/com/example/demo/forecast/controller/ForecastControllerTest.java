@@ -1,12 +1,13 @@
 package com.example.demo.forecast.controller;
 
+import com.example.demo.forecast.service.ForecastService;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
@@ -23,6 +24,9 @@ public class ForecastControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @MockBean
+    private ForecastService forecastService;
 
     @Test
     @DisplayName("Open API 통신 테스트")

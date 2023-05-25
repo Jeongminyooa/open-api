@@ -1,5 +1,8 @@
 package com.example.demo.forecast.controller;
 
+import com.example.demo.forecast.dto.FcstItems;
+import com.example.demo.forecast.service.ForecastService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +19,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api")
 public class ForecastController {
     @Value("${openApi.serviceKey}")
@@ -27,8 +31,10 @@ public class ForecastController {
     @Value("${openApi.dataType}")
     private String dataType;
 
+    private final ForecastService forecastService;
+
     @GetMapping("/forecast")
-    public ResponseEntity<String> callForecastApi(
+    public ResponseEntity<FcstItems> callForecastApi(
             @RequestParam(value="base_time") String baseTime,
             @RequestParam(value="base_date") String baseDate,
             @RequestParam(value="beach_num") String beachNum
@@ -60,7 +66,8 @@ public class ForecastController {
             }
         }
 
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        FcstItems response = forecastService.parsingJsonObject(result);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /* URLConnection 을 전달받아 연결정보 설정 후 연결, 연결 후 수신한 InputStream 반환 */
